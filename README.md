@@ -31,11 +31,11 @@ The Smart Event Management and Ticketing Platform allows administrators to manag
 
 | Name | Role | Responsibilities |
 |---|---|---|
-| [Name 1] | Team Lead / Full-Stack Contributor | GitHub setup, MVC scaffold, Express entry point, route wiring, search & filtering logic |
-| [Name 2] | Backend Developer | Event CRUD controllers, booking logic, capacity validation middleware, Express routes |
-| [Name 3] | Frontend Developer | EJS templates and partials, CSS/Bootstrap styling, responsive layout |
-| [Name 4] | Database Engineer | Mongoose schemas, validation rules, seed data, admin analytics queries |
-| [Name 5] | Security / DevOps Engineer | bcrypt hashing, session/JWT auth, RBAC middleware, error handling, contact enquiry controller |
+| Rivan Maritz | Team Lead / Full-Stack Contributor | GitHub setup, MVC scaffold, Express entry point, route wiring, search & filtering logic |
+| Ruan Jordaan | Backend Developer | Event CRUD controllers, booking logic, capacity validation middleware, Express routes |
+| Ioannis Karagounis | Frontend Developer | EJS templates and partials, CSS/Bootstrap styling, responsive layout |
+| Ofentse Mathosa | Database Engineer | Mongoose schemas, validation rules, seed data, admin analytics queries |
+| Mohau Drew Modiselle | Security / DevOps Engineer | bcrypt hashing, session/JWT auth, RBAC middleware, error handling, contact enquiry controller |
 
 ---
 
@@ -145,6 +145,7 @@ After seeding, you can log in with the default admin credentials:
 ```
 Email:    admin@advancedevents.co.za
 Password: Admin@1234
+This is to be changed
 ```
 
 > ⚠️ Change these credentials immediately in a production environment.
@@ -184,18 +185,6 @@ The system follows the **MVC (Model-View-Controller)** pattern:
 - **Views** — EJS templates for server-side rendered HTML
 - **Controllers** — Business logic handling requests and responses
 - **Middleware** — Authentication, authorisation, and error handling layers
-
----
-
-## 📸 Screenshots
-
-> *(Add screenshots of your running application here)*
-
----
-
-## 💭 Reflection
-
-> *(Optional — briefly describe challenges faced, lessons learned, and what your team would do differently)*
 
 ---
 
