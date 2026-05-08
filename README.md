@@ -95,7 +95,7 @@ Make sure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/smart-event-platform.git
+git clone https://github.com/Rivan-Maritz/WPR381_Booking_Website
 cd smart-event-platform
 ```
 
