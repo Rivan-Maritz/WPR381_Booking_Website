@@ -4,7 +4,8 @@
   "description": "A full-stack web application built for **Advanced Events (Pty) Ltd** to manage events, ticket bookings, and customer enquiries. The system replaces manual spreadsheets and disconnected tools with a secure, scalable, and role-aware platform.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
