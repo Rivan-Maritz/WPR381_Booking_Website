@@ -1,0 +1,32 @@
+{
+  "name": "wpr381_booking_website",
+  "version": "1.0.0",
+  "description": "A full-stack web application built for **Advanced Events (Pty) Ltd** to manage events, ticket bookings, and customer enquiries. The system replaces manual spreadsheets and disconnected tools with a secure, scalable, and role-aware platform.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rivan-Maritz/WPR381_Booking_Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Rivan-Maritz/WPR381_Booking_Website/issues"
+  },
+  "homepage": "https://github.com/Rivan-Maritz/WPR381_Booking_Website#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongoose": "^9.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
