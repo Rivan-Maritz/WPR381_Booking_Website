@@ -6,7 +6,29 @@
     <title>Document</title>
 </head>
 <body>
+<!-- SEARCH & FILTER FORM -->
+<form action="/" method="GET">
+  <input  type="text"     name="search"    placeholder="Search events..." value="<%= typeof search !== 'undefined' ? search : '' %>" />
+  <select name="category">
+    <option value="">All categories</option>
+    <option value="conference" <%= typeof category !== 'undefined' && category === 'conference' ? 'selected' : '' %>>Conference</option>
+    <option value="workshop"   <%= typeof category !== 'undefined' && category === 'workshop'   ? 'selected' : '' %>>Workshop</option>
+    <option value="festival"   <%= typeof category !== 'undefined' && category === 'festival'   ? 'selected' : '' %>>Festival</option>
+    <option value="private"    <%= typeof category !== 'undefined' && category === 'private'    ? 'selected' : '' %>>Private</option>
+    <option value="other"      <%= typeof category !== 'undefined' && category === 'other'      ? 'selected' : '' %>>Other</option>
+  </select>
+  <input type="date"     name="date"      value="<%= typeof dateFilter !== 'undefined' ? dateFilter : '' %>" />
+  <input type="checkbox" name="available" value="true" <%= typeof available !== 'undefined' && available ? 'checked' : '' %> />
+  <label>Available only</label>
+  <button type="submit">Filter</button>
+</form>
 
+<!-- BOOK TICKET FORM -->
+      <form action="/bookings" method="POST">
+        <input type="hidden" name="eventId"      value="<%= event._id %>" />
+        <input type="number" name="ticketsBooked" value="1" min="1" max="<%= event.availableSeats %>" required />
+        <button type="submit">Book now</button>
+      </form>
     <%- include('../partials/footer') %>
     
 </body>
