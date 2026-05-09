@@ -6,6 +6,29 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form action="/contact" method="POST">
+  <!-- name & email pre-filled if logged in -->
+  <input type="text"  name="name"    value="<%= typeof user !== 'undefined' && user ? user.name : '' %>"  placeholder="Your name"    required />
+  <input type="email" name="email"   value="<%= typeof user !== 'undefined' && user ? user.email : '' %>" placeholder="Your email"   required />
+  <input type="text"  name="subject" placeholder="Subject" required />
+  <textarea           name="message" placeholder="Your message" required></textarea>
+  <button type="submit">Send enquiry</button>
+</form>
+
+
+ <form action="/contact/<%= enquiry._id %>/reply" method="POST">
+        <textarea name="adminReply" placeholder="Write a reply..."><%= enquiry.adminReply || '' %></textarea>
+        <select name="status">
+          <option value="unread"   <%= enquiry.status === 'unread'   ? 'selected' : '' %>>Unread</option>
+          <option value="read"     <%= enquiry.status === 'read'     ? 'selected' : '' %>>Read</option>
+          <option value="resolved" <%= enquiry.status === 'resolved' ? 'selected' : '' %>>Resolved</option>
+        </select>
+        <select name="priority">
+          <option value="low"    <%= enquiry.priority === 'low'    ? 'selected' : '' %>>Low</option>
+          <option value="medium" <%= enquiry.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+          <option value="high"   <%= enquiry.priority === 'high'   ? 'selected' : '' %>>High</option>
+        </select>
+        <button type="submit">Save reply</button>
+      </form>
 </body>
 </html>
