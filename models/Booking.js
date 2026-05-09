@@ -27,6 +27,22 @@ const bookingSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    // ADDED: tracks whether the user has paid for this booking
+    paymentStatus: {
+      type: String,
+      enum: ['pending', 'paid', 'refunded'],
+      default: 'pending',
+    },
+    // ADDED: unique reference string used to generate a QR code on the ticket
+    qrCodeReference: {
+      type: String,
+      default: null,
+    },
+    // ADDED: records exactly when a booking was cancelled
+    cancelledAt: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );
