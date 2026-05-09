@@ -1,18 +1,53 @@
-const express = require('express');
-const path = require('path');
-const PORT = 3000;
-require('dotenv').config();
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const path = require("path");
+const session = require("express-session"); // Added session requirement
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.set('view engine','ejs');
+// Middleware
+// These 2 lines allow express to read the req.body (data coming from ejs forms and json requests)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('public'));
+// Configure the Session Middleware to remember logged-in users
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET, // Make sure this is defined in your .env file!
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // Keep false for localhost. Set to true if deploying with HTTPS later.
+      maxAge: 1000 * 60 * 60 * 24, // Session will expire after 1 day
+    },
+  }),
+);
 
-app.get('/',(req,res) => {
-    res.render("auth/login");
-})
+app.set("view engine", "ejs");
+app.use(express.static("public"));
 
-app.listen(PORT,() => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-})
+// Routes
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth", authRoutes);
+
+const enquiryRoutes = require("./routes/enquiryRoutes");
+app.use("/enquiry", enquiryRoutes);
+
+// Base route - temporarily pointing to the login page for testing
+app.get("/", (req, res) => {
+  res.render("auth/login");
+});
+
+app.use(notFound);
+app.use(errorHandler);
+
+const connectDB = require("./models/db");
+connectDB();
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+});
