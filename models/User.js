@@ -26,6 +26,17 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
+     // ADDED: URL or filename of the user's profile picture
+    profilePicture: {
+      type: String,
+      default: null,
+    },
+    // ADDED: optional phone number for contact purposes
+    phone: {
+      type: String,
+      trim: true,
+      default: null,
+    },
   },
   { timestamps: true }
 );
