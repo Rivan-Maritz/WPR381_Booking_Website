@@ -34,6 +34,22 @@ const enquirySchema = new mongoose.Schema(
       ref: 'User',
       default: null,
     },
+     // ADDED: admin's written reply to this enquiry
+    adminReply: {
+      type: String,
+      default: null,
+    },
+    // ADDED: timestamp of when the admin replied
+    repliedAt: {
+      type: Date,
+      default: null,
+    },
+    // ADDED: priority level so admin can triage urgent enquiries first
+    priority: {
+      type: String,
+      enum: ['low', 'medium', 'high'],
+      default: 'low',
+    },
   },
   { timestamps: true }
 );
