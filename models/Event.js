@@ -48,6 +48,21 @@ const eventSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+     // ADDED: URL or filename of the event's banner image
+    eventImage: {
+      type: String,
+      default: null,
+    },
+    // ADDED: array of tags for filtering (e.g. ['AI', 'networking'])
+    tags: {
+      type: [String],
+      default: [],
+    },
+    // ADDED: optional GPS coordinates for map display
+    locationCoords: {
+      lat: { type: Number, default: null },
+      lng: { type: Number, default: null },
+    },
   },
   { timestamps: true }
 );
