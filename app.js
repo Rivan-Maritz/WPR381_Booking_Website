@@ -27,8 +27,16 @@ app.use(
   }),
 );
 
+//Make local user global
+app.use((req,res,next) => {
+  res.locals.user = req.session?.user || null;
+  next();
+})
+
+const connectDB = require("./models/db");
+connectDB();
+
 app.set("view engine", "ejs");
-app.use(express.static("public"));
 
 // Routes
 const authRoutes = require("./routes/authRoutes");
@@ -37,16 +45,22 @@ app.use("/auth", authRoutes);
 const enquiryRoutes = require("./routes/enquiryRoutes");
 app.use("/enquiry", enquiryRoutes);
 
+const eventRoutes = require("./routes/eventRoutes");
+app.use("/events", eventRoutes );
+
 // Base route - temporarily pointing to the login page for testing
 app.get("/", (req, res) => {
-  res.render("auth/login");
+  if (req.session.user) {
+    res.redirect("/events");
+  } else {
+    res.render("auth/login");
+  }
 });
+
+app.use(express.static("public"));
 
 app.use(notFound);
 app.use(errorHandler);
-
-const connectDB = require("./models/db");
-connectDB();
 
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);

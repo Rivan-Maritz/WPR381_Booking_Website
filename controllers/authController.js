@@ -6,7 +6,7 @@ const registerUser = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send("An account this email already exists.");
+      return res.status(400).send("An account with this email already exists.");
     }
 
     const newUser = new User({ name, email, password, phone });
@@ -21,14 +21,21 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, passward } = req.body;
+    const { email, password } = req.body;
 
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).send("Invalid email or password.");
     }
 
-    res.status(200).send("Login successful! Welcome back, ${user.name}.");
+    req.session.user = {
+      id: user.id,
+      name: user.name,
+      role: user.role
+    }
+
+    //res.status(200).send(`Login successful! Welcome back, ${user.name}.`);
+    res.redirect("/events/home");
   } catch (error) {
     console.error("Error during login: ", error);
     res.status(500).send("Internal Server Error");

@@ -4,32 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
-<!-- SEARCH & FILTER FORM -->
-<form action="/" method="GET">
-  <input  type="text"     name="search"    placeholder="Search events..." value="<%= typeof search !== 'undefined' ? search : '' %>" />
-  <select name="category">
-    <option value="">All categories</option>
-    <option value="conference" <%= typeof category !== 'undefined' && category === 'conference' ? 'selected' : '' %>>Conference</option>
-    <option value="workshop"   <%= typeof category !== 'undefined' && category === 'workshop'   ? 'selected' : '' %>>Workshop</option>
-    <option value="festival"   <%= typeof category !== 'undefined' && category === 'festival'   ? 'selected' : '' %>>Festival</option>
-    <option value="private"    <%= typeof category !== 'undefined' && category === 'private'    ? 'selected' : '' %>>Private</option>
-    <option value="other"      <%= typeof category !== 'undefined' && category === 'other'      ? 'selected' : '' %>>Other</option>
-  </select>
-  <input type="date"     name="date"      value="<%= typeof dateFilter !== 'undefined' ? dateFilter : '' %>" />
-  <input type="checkbox" name="available" value="true" <%= typeof available !== 'undefined' && available ? 'checked' : '' %> />
-  <label>Available only</label>
-  <button type="submit">Filter</button>
-</form>
 
-<!-- BOOK TICKET FORM -->
-      <form action="/bookings" method="POST">
-        <input type="hidden" name="eventId"      value="<%= event._id %>" />
-        <input type="number" name="ticketsBooked" value="1" min="1" max="<%= event.availableSeats %>" required />
-        <button type="submit">Book now</button>
-      </form>
-    <%- include('../partials/footer') %>
-    
+<%- include('../partials/navbar', { user }) %>
+
+<main class="container">
+
+    <h1>Upcoming Events</h1>
+
+    <form action="/events/home" method="GET" class="filter-form">
+
+    <input 
+        type="text"
+        name="search"
+        placeholder="Search events..."
+        value="<%= search %>"
+    >
+
+    <select name="category">
+        <option value="">All Categories</option>
+        <option value="conference" <%= category === "conference" ? "selected" : "" %>>Conference</option>
+        <option value="workshop" <%= category === "workshop" ? "selected" : "" %>>Workshop</option>
+        <option value="festival" <%= category === "festival" ? "selected" : "" %>>Festival</option>
+        <option value="private" <%= category === "private" ? "selected" : "" %>>Private</option>
+        <option value="other" <%= category === "other" ? "selected" : "" %>>Other</option>
+    </select>
+
+    <input 
+        type="date"
+        name="date"
+        value="<%= date %>"
+    >
+
+    <select name="availability">
+        <option value="">Any Availability</option>
+        <option value="available" <%= availability === "available" ? "selected" : "" %>>Available</option>
+        <option value="soldout" <%= availability === "soldout" ? "selected" : "" %>>Sold Out</option>
+    </select>
+
+    <button type="submit">
+        Filter
+    </button>
+
+    </form>
+
+    <section class="event-grid">
+
+        <% if (events.length === 0) { %>
+            <p>No events found.</p>
+        <% } %>
+
+        <% events.forEach(event => { %>
+
+            <div class="event-card">
+
+                <img 
+                    src="<%= event.eventImage || '/images/default.jpg' %>" 
+                    alt="<%= event.title %>"
+                >
+
+                <div class="event-info">
+
+                    <h2><%= event.title %></h2>
+
+                    <p><strong>Category:</strong> <%= event.category %></p>
+
+                    <p><strong>Date:</strong> <%= new Date(event.date).toDateString() %></p>
+
+                    <p><strong>Location:</strong> <%= event.location %></p>
+
+                    <p><strong>Price:</strong> R<%= event.ticketPrice %></p>
+
+                    <p>
+                        <strong>Tickets Left:</strong>
+                        <%= event.totalCapacity - event.bookedCount %>
+                    </p>
+
+                    <a href="/events/<%= event._id %>">
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    </section>
+
+</main>
+
+<%- include('../partials/footer') %>
+
 </body>
+
 </html>
+
+
+    
+

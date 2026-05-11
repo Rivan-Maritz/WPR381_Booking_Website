@@ -1,0 +1,48 @@
+
+.main-footer {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+
+.footer-brand h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.footer-brand h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #a0aec0;
+    letter-spacing: 0.5px;
+}
+
+
+@media (max-width: 768px) {
+    .main-footer {
+        padding: 1.5rem 0;
+    }
+    
+    .footer-brand h2 {
+        font-size: 1.2rem;
+    }
+    
+    .footer-brand h3 {
+        font-size: 1rem;
+    }
+}
