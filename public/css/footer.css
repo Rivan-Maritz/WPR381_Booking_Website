@@ -1,10 +1,24 @@
-
-.main-footer {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    margin-top: 4rem;
-    padding: 2rem 0;
+/* Make the body and main content take full height */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Main content wrapper - push footer down */
+main, .main-content {
+    flex: 1 0 auto;
+}
+
+/* Footer styles */
+.main-footer {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    margin-top: auto; /* This pushes the footer to the bottom */
+    padding: 2rem 0;
+    flex-shrink: 0; /* Prevents footer from shrinking */
+}
 
 .footer-container {
     max-width: 1280px;
@@ -12,7 +26,6 @@
     padding: 0 2rem;
     text-align: center;
 }
-
 
 .footer-brand h2 {
     font-size: 1.5rem;
@@ -31,7 +44,6 @@
     color: #a0aec0;
     letter-spacing: 0.5px;
 }
-
 
 @media (max-width: 768px) {
     .main-footer {

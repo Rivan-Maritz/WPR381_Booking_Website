@@ -13,7 +13,7 @@
 
 <body>
   <nav>
-    <span>Welcome, <%= user.name %></span>
+    <span id="span-navbar">Welcome, <%= user.name %></span>
     <a href="/events/home">Events</a>
     <% if (typeof user !=='undefined' && user) { %>
       <% if (user.role==='user' ){%>

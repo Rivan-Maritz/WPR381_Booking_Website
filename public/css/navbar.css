@@ -34,5 +34,17 @@ nav a {
 
 nav a:hover {
     color: white;
-    background: rgba(102, 126, 234, 0.2);
+}
+
+#span-navbar {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2c3e50;
+  background: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border-left: 3px solid #3498db;
+  display: inline-block;
+  transition: all 0.2s ease;
 }
