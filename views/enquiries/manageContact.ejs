@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Enquiries</title>
+    <link rel="stylesheet" href="/css/managerContact.css">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <main>
+        <h1>Manage Enquiries</h1>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Admin Reply</th>
+                        <th>Replied At</th>
+                        <th>Save</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (enquiries && enquiries.length) { %>
+                        <% enquiries.forEach(enquiry => { %>
+                            <tr>
+                                <td><%= enquiry.name %></td>
+                                <td><%= enquiry.email %></td>
+                                <td><%= enquiry.subject %></td>
+                                <td><%= enquiry.message %></td>
+                                <td>
+                                    <span class="status-chip status-<%= enquiry.status %>"><%= enquiry.status %></span>
+                                </td>
+                                <td><%= enquiry.priority %></td>
+                                <td><%= enquiry.adminReply || '—' %></td>
+                                <td><%= enquiry.repliedAt ? enquiry.repliedAt.toISOString().slice(0, 16).replace('T',' ') : '—' %></td>
+                                <td>
+                                    <button type="button" class="save-btn" data-id="<%= enquiry._id %>">Edit</button>
+                                </td>
+                            </tr>
+                            <tr id="edit-block-<%= enquiry._id %>" class="hidden">
+                                <td colspan="9">
+                                    <form class="form-inline" action="/enquiries/manageContact/<%= enquiry._id %>/update" method="POST">
+                                        <label>
+                                            Admin Response
+                                            <textarea name="adminReply"><%= enquiry.adminReply || '' %></textarea>
+                                        </label>
+                                        <label>
+                                            Status
+                                            <select name="status" required>
+                                                <option value="unread" <%= enquiry.status === 'unread' ? 'selected' : '' %>>Unread</option>
+                                                <option value="read" <%= enquiry.status === 'read' ? 'selected' : '' %>>Read</option>
+                                                <option value="resolved" <%= enquiry.status === 'resolved' ? 'selected' : '' %>>Resolved</option>
+                                            </select>
+                                        </label>
+                                        <label>
+                                            Priority
+                                            <select name="priority" required>
+                                                <option value="low" <%= enquiry.priority === 'low' ? 'selected' : '' %>>Low</option>
+                                                <option value="medium" <%= enquiry.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+                                                <option value="high" <%= enquiry.priority === 'high' ? 'selected' : '' %>>High</option>
+                                            </select>
+                                        </label>
+                                        <button type="submit" class="save-btn">Save Changes</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="9" style="text-align:center; padding: 24px;">No enquiries found.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <%- include('../partials/footer') %>
+    <script src = "/js/managerContact.js"></script>
+</body>
+</html>

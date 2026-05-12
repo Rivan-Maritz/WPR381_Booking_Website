@@ -61,3 +61,76 @@ exports.getAllEvents = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+
+exports.getManageEvents = async (req, res) => {
+    try {
+        const events = await Event.find().sort({ date: 1 });
+        res.render("events/manageEvents", { events });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+};
+
+exports.createEvent = async (req, res) => {
+    try {
+        const { title, category, date, location, price, totalCapacity, description } = req.body;
+        const createdBy = req.user?.id || req.session?.user?.id;
+
+        await Event.create({
+            title,
+            description: description?.trim() || `${title} event created by admin`,
+            category,
+            date,
+            location,
+            ticketPrice: parseFloat(price) || 0,
+            totalCapacity: parseInt(totalCapacity, 10) || 0,
+            createdBy,
+        });
+
+        res.redirect("/events/manageEvents");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+};
+
+exports.updateEvent = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const { title, category, date, location, price, totalCapacity } = req.body;
+
+        const event = await Event.findByIdAndUpdate(
+            eventId,
+            {
+                title,
+                category,
+                date,
+                location,
+                ticketPrice: parseFloat(price) || 0,
+                totalCapacity: parseInt(totalCapacity, 10) || 0,
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!event) {
+            return res.status(404).send("Event not found");
+        }
+
+        res.redirect("/events/manageEvents");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+};
+
+exports.deleteEvent = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        await Event.findByIdAndDelete(eventId);
+        res.redirect("/events/manageEvents");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+};

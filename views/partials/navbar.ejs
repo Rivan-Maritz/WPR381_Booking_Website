@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/navbar.css">
-    <script src="/js/navbar.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="/js/navbar.js"></script>
 </head>
+
 <body>
-    <nav>
+  <nav>
     <span>Welcome, <%= user.name %></span>
-  <a href="/events/home">Events</a>
-  <% if (typeof user !== 'undefined' && user) { %>
-    <a href="/bookings/book">Book</a>
-    <a href="/bookings/activeBook">Active Bookings</a>
-    <a href="/enquiries/contact">Contact</a>
-    <a href="/auth/logout">Logout</a>
-    <% if (user.role === 'admin') { %>
-      <a href="/events/manage">Manage Events</a>
-    <% } %>
-  <% } else { %>
-    <a href="/auth/login">Login</a>
-    <a href="/auth/register">Register</a>
-  <% } %>
-</nav>
+    <a href="/events/home">Events</a>
+    <% if (typeof user !=='undefined' && user) { %>
+      <% if (user.role==='user' ){%>
+        <a href="/bookings/book">Book</a>
+        <a href="/bookings/activeBook">Active Bookings</a>
+        <a href="/enquiries/contact">Contact</a>
+        <%}%>
+          <% if (user.role==='admin' ) { %>
+            <a href="/events/manageEvents">Manage Events</a>
+            <a href="/enquiries/manageContact">Manage Contacts</a>
+            <% } %>
+              <% } else { %>
+                <a href="/auth/login">Login</a>
+                <a href="/auth/register">Register</a>
+                <% } %>
+                  <a href="/auth/logout">Logout</a>
+  </nav>
 </body>
+
 </html>

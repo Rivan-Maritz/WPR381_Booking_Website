@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { submitEnquiry } = require("../controllers/enquiryController");
+const enquiryController = require("../controllers/enquiryController");
+const { isAdmin } = require("../middleware/authMiddleware");
 
 router.get("/contact", (req, res) => {
   console.log("Route Recieved");
@@ -9,6 +10,9 @@ router.get("/contact", (req, res) => {
   });
 });
 
-router.post("/contact", submitEnquiry);
+router.post("/contact", enquiryController.submitEnquiry);
+
+router.get("/manageContact", isAdmin, enquiryController.getManageContact);
+router.post("/manageContact/:id/update", isAdmin, enquiryController.updateEnquiry);
 
 module.exports = router;
