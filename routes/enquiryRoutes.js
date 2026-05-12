@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const { submitEnquiry } = require("../controllers/enquiryController");
 
-router.get("/", (req, res) => {
+router.get("/contact", (req, res) => {
+  console.log("Route Recieved");
   res.render("enquiries/contact", {
     user: req.session.user || null
   });
 });
 
-router.post("/", submitEnquiry);
+router.post("/contact", submitEnquiry);
 
 module.exports = router;

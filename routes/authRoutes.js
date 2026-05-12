@@ -19,8 +19,10 @@ router.get("/login", (req, res) => {
 // Maps to: POST /auth/register
 router.post("/register", registerUser);
 
-router.post("/logout", logoutUser);
 // Maps to: POST /auth/login
 router.post("/login", loginUser);
+
+//Maps to : Get /logout
+router.get("/logout", logoutUser);
 
 module.exports = router;

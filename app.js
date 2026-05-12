@@ -42,7 +42,7 @@ const authRoutes = require("./routes/authRoutes");
 app.use("/auth", authRoutes);
 
 const enquiryRoutes = require("./routes/enquiryRoutes");
-app.use("/contact", enquiryRoutes);
+app.use("/enquiries", enquiryRoutes);
 
 const eventRoutes = require("./routes/eventRoutes");
 app.use("/events", eventRoutes );

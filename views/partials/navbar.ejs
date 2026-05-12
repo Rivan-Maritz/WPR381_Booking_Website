@@ -15,13 +15,11 @@
   <% if (typeof user !== 'undefined' && user) { %>
     <a href="/bookings/book">Book</a>
     <a href="/bookings/activeBook">Active Bookings</a>
-    <a href="/contact">Contact</a>
+    <a href="/enquiries/contact">Contact</a>
+    <a href="/auth/logout">Logout</a>
     <% if (user.role === 'admin') { %>
       <a href="/events/manage">Manage Events</a>
     <% } %>
-    <form action="/auth/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
   <% } else { %>
     <a href="/auth/login">Login</a>
     <a href="/auth/register">Register</a>

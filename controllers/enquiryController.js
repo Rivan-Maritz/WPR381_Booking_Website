@@ -4,6 +4,13 @@ const submitEnquiry = async (req, res, next) => {
   try {
     const { name, email, subject, message } = req.body;
 
+    console.log('=== SUBMIT ENQUIRY DEBUG ===');
+    console.log('Request body:', req.body);
+    console.log('Extracted fields:', { name, email, subject, message });
+    console.log('Session userId:', req.session?.userId);
+    console.log('Full session:', req.session);
+
+
     const newEnquiry = new Enquire({
       name,
       email,
@@ -14,7 +21,7 @@ const submitEnquiry = async (req, res, next) => {
     });
 
     await newEnquiry.save();
-    res.status(201).json({ message: "Enquiry submitted successfully" });
+    res.redirect('/events/home');
   } catch (error) {
     next(error);
   }
