@@ -43,10 +43,13 @@ const authRoutes = require("./routes/authRoutes");
 app.use("/auth", authRoutes);
 
 const enquiryRoutes = require("./routes/enquiryRoutes");
-app.use("/enquiry", enquiryRoutes);
+app.use("/contact", enquiryRoutes);
 
 const eventRoutes = require("./routes/eventRoutes");
 app.use("/events", eventRoutes );
+
+const bookRoutes = require("./routes/bookingRoutes");
+app.use("/book", bookRoutes);
 
 // Base route - temporarily pointing to the login page for testing
 app.get("/", (req, res) => {

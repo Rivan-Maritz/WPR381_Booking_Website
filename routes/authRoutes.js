@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser } = require("../controllers/authController");
+const { registerUser, loginUser, logoutUser } = require("../controllers/authController");
 
 // --- GET ROUTES (These render the visual EJS pages) ---
 
@@ -19,6 +19,7 @@ router.get("/login", (req, res) => {
 // Maps to: POST /auth/register
 router.post("/register", registerUser);
 
+router.post("/logout", logoutUser);
 // Maps to: POST /auth/login
 router.post("/login", loginUser);
 

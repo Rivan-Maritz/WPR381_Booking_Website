@@ -42,7 +42,19 @@ const loginUser = async (req, res) => {
   }
 };
 
+const logoutUser = async (req, res) => {
+  try{
+    req.session.destroy(() => {
+      res.redirect("/auth/login");
+    })
+  }catch(error){
+    console.error("Error during logout.");
+    res.status(500).send("Internal server error.")
+  }
+}
+
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
 };

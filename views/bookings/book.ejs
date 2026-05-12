@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Event</title>
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+<body>
+    <%- include('../partials/navbar', { user }) %>
+
+    <main class="booking-container">
+        <h1 class="booking-heading">Available events</h1>
+
+        <% if (events && events.length > 0) { %>
+            <div class="booking-row header">
+                <span>Event</span>
+                <span>Date</span>
+                <span>Price</span>
+                <span></span>
+            </div>
+
+            <% events.forEach((event) => { %>
+                <div class="booking-row">
+                    <div class="event-info">
+                        <h2><%= event.title %></h2>
+                        <p><%= event.description %></p>
+                    </div>
+                    <span><%= new Date(event.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) %></span>
+                    <span>R<%= (event.ticketPrice || 0).toFixed(2) %></span>
+                    <button type="button" class="book-button">Book ticket</button>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="empty-state">
+                No events are available right now. Check back later for new ticketed events.
+            </div>
+        <% } %>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
