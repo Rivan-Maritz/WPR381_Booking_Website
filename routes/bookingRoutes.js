@@ -17,4 +17,7 @@ router.post('/book/create/:eventId', (req, res, next) => {
     next();
 }, isAuthenticated, bookController.createBooking);
 
+//add code for active booking
+router.get('/activeBook', isAuthenticated, bookController.getActiveBookings);
+
 module.exports = router;

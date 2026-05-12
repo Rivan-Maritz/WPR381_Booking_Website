@@ -61,11 +61,6 @@
 
             <div class="event-card">
 
-                <img 
-                    src="<%= event.eventImage || '/images/default.jpg' %>" 
-                    alt="<%= event.title %>"
-                >
-
                 <div class="event-info">
 
                     <h2><%= event.title %></h2>
@@ -82,10 +77,6 @@
                         <strong>Tickets Left:</strong>
                         <%= event.totalCapacity - event.bookedCount %>
                     </p>
-
-                    <a href="/events/<%= event._id %>">
-                        View Details
-                    </a>
 
                 </div>
 

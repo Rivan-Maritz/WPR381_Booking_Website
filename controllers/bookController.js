@@ -114,8 +114,30 @@ const createBooking = async (req, res) => {
     }
 };
 
+const getActiveBookings = async (req, res, next) => {
+    try {
+        const userId = req.user?.id || req.session.user?.id;
+        if (!userId) {
+            req.session.error = 'Please login to view your bookings';
+            return res.redirect('/auth/login');
+        }
+
+        const bookings = await Booking.find({ user: userId })
+            .populate({ path: 'event', select: 'title date ticketPrice location isActive' })
+            .sort({ createdAt: -1 });
+
+        res.render('bookings/activeBook', {
+            bookings,
+            user: req.session.user || null,
+        });
+    } catch (err) {
+        console.error('Error in getActiveBookings:', err);
+        next(err);
+    }
+};
 
 module.exports = {
     GetAllEvents,
-    createBooking
+    createBooking,
+    getActiveBookings
 };

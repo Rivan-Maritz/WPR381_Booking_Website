@@ -3,11 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Submit an Enquiry</title>
+  <link rel="stylesheet" href="/css/contact.css">
 </head>
 <body>
   <%- include('../partials/navbar', { user }) %>
-  <h1>This is the contact page ohh yea</h1>
+  
+  <main class="enquiry-container">
+    <div class="enquiry-wrapper">
+      <h1 class="enquiry-heading">Contact Us</h1>
+      <p class="enquiry-subheading">Send us your questions or feedback and we'll get back to you shortly.</p>
+
+      <form method="POST" action="/contact" class="enquiry-form">
+        <div class="form-section">
+          <h2 class="form-section-title">Your Information</h2>
+          
+          <div class="form-group">
+            <label for="name" class="form-label">Full Name</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              class="form-input" 
+              value="<%= user?.name || '' %>" 
+              readonly
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="form-input" 
+              value="<%= user?.email || '' %>" 
+              readonly
+            >
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2 class="form-section-title">Your Message</h2>
+          
+          <div class="form-group">
+            <label for="subject" class="form-label">Subject <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="subject" 
+              name="subject" 
+              class="form-input" 
+              placeholder="What is this about?" 
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message <span class="required">*</span></label>
+            <textarea 
+              id="message" 
+              name="message" 
+              class="form-textarea" 
+              rows="8" 
+              placeholder="Please provide details about your enquiry..." 
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="submit-button">Send Enquiry</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
   <%- include('../partials/footer') %>
 </body>
 </html>

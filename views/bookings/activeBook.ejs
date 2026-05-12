@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Active Bookings</title>
+    <link rel="stylesheet" href="/css/activeBook.css">
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <main class="active-booking-container">
+        <h1 class="active-booking-heading">Your Bookings</h1>
+
+        <% if (bookings && bookings.length > 0) { %>
+            <div class="booking-row header">
+                <span>Event</span>
+                <span>Date</span>
+                <span>Tickets</span>
+                <span>Total</span>
+                <span>Status</span>
+            </div>
+
+            <% bookings.forEach((booking) => { %>
+                <div class="booking-row">
+                    <div class="booking-info">
+                        <h2><%= booking.event?.title || 'Event removed' %></h2>
+                        <p><%= booking.event?.location || 'No location available' %></p>
+                    </div>
+                    <span><%= booking.event?.date ? new Date(booking.event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'TBD' %></span>
+                    <span><%= booking.ticketsBooked %></span>
+                    <span>R<%= (booking.totalPrice || 0).toFixed(2) %></span>
+                    <span class="status-badge <%= booking.status %>"><%= booking.status %></span>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="empty-state">
+                You have no active bookings yet. Book an event to see it listed here.
+            </div>
+        <% } %>
+    </main>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>
