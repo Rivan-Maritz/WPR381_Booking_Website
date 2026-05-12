@@ -29,6 +29,7 @@ nav span {
 
 nav a {
     color: #c3c3d9;
+    text-decoration: none;
 }
 
 nav a:hover {

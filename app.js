@@ -27,7 +27,6 @@ app.use(
   }),
 );
 
-//Make local user global
 app.use((req,res,next) => {
   res.locals.user = req.session?.user || null;
   next();
@@ -49,7 +48,7 @@ const eventRoutes = require("./routes/eventRoutes");
 app.use("/events", eventRoutes );
 
 const bookRoutes = require("./routes/bookingRoutes");
-app.use("/book", bookRoutes);
+app.use("/bookings", bookRoutes);
 
 // Base route - temporarily pointing to the login page for testing
 app.get("/", (req, res) => {

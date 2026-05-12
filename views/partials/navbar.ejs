@@ -13,7 +13,7 @@
     <span>Welcome, <%= user.name %></span>
   <a href="/events/home">Events</a>
   <% if (typeof user !== 'undefined' && user) { %>
-    <a href="/book">Book</a>
+    <a href="/bookings/book">Book</a>
     <a href="/contact">Contact</a>
     <% if (user.role === 'admin') { %>
       <a href="/events/manage">Manage Events</a>

@@ -1,17 +1,20 @@
 const express = require("express");
-const Event = require("../models/Event");
 const router = express.Router();
+const bookController = require('../controllers/bookController');
+const {isAuthenticated, isAdmin} = require('../middleware/authMiddleware');
 
-router.get("/", async (req, res, next) => {
-    try {
-        const events = await Event.find({ isActive: true }).sort({ date: 1 });
-        res.render("bookings/book", {
-            events,
-            user: req.session.user || null,
-        });
-    } catch (err) {
-        next(err);
-    }
+// Debug route - check if session is working
+router.get('/check-session', (req, res) => {
+    res.json({
+        sessionUser: req.session.user,
+        hasUser: !!req.session.user
+    });
 });
+
+router.get('/book', bookController.GetAllEvents); 
+router.post('/book/create/:eventId', (req, res, next) => {
+    console.log('Before auth - Session:', req.session.user);
+    next();
+}, isAuthenticated, bookController.createBooking);
 
 module.exports = router;

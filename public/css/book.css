@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 body {
   font-family:
     "Inter",
@@ -46,7 +50,7 @@ body {
 /* Booking Rows */
 .booking-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 120px 160px;
+  grid-template-columns: 2fr 1fr 120px 100px 140px 140px;
   align-items: center;
   gap: 1.5rem;
   padding: 1.5rem;
@@ -94,6 +98,39 @@ body {
   font-size: 0.95rem;
 }
 
+/* Event Meta */
+.event-meta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.event-meta small {
+  background: rgba(102, 126, 234, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+/* Available Info */
+.available-info {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.available-info.available {
+  color: #48bb78;
+}
+
+.available-info.sold-out {
+  color: #f56565;
+}
+
 /* Date + Price */
 .booking-row span {
   font-size: 0.95rem;
@@ -108,6 +145,48 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.booking-row span:nth-child(4) {
+  font-size: 1rem;
+  font-weight: 600;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: #2d3748;
+}
+
+/* Booking Form */
+.booking-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* Ticket Input */
+.ticket-input {
+  width: 70px;
+  padding: 0.7rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  font-family: inherit;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.ticket-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ticket-input:disabled {
+  background-color: #f7fafc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* Button */
@@ -134,6 +213,45 @@ body {
   transform: translateY(0);
 }
 
+.book-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Alerts */
+.alert {
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 0.7rem;
+  font-weight: 500;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  box-shadow: 0 5px 15px rgba(72, 187, 120, 0.25);
+}
+
+.alert-error {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  color: white;
+  box-shadow: 0 5px 15px rgba(245, 101, 101, 0.25);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* Empty State */
 .empty-state {
   text-align: center;
@@ -145,7 +263,19 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive */
+/* Responsive Design */
+@media (max-width: 1100px) {
+  .booking-row {
+    grid-template-columns: 2fr 1fr 120px 100px 1fr;
+    gap: 1rem;
+  }
+
+  .booking-row.header span:nth-child(5),
+  .booking-row.header span:nth-child(6) {
+    display: none;
+  }
+}
+
 @media (max-width: 900px) {
   .booking-row {
     grid-template-columns: 1fr;
@@ -157,12 +287,24 @@ body {
     display: none;
   }
 
+  .booking-form {
+    width: 100%;
+  }
+
+  .ticket-input {
+    flex: 1;
+  }
+
   .book-button {
     width: 100%;
   }
 
   .booking-heading {
     font-size: 2.3rem;
+  }
+
+  .event-meta {
+    margin-bottom: 0.5rem;
   }
 }
 

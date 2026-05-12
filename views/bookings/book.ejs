@@ -7,16 +7,25 @@
     <link rel="stylesheet" href="/css/book.css">
 </head>
 <body>
-    <%- include('../partials/navbar', { user }) %>
+    <%- include('../partials/navbar', { user: user }) %>
 
     <main class="booking-container">
         <h1 class="booking-heading">Available events</h1>
+
+        <% if (message) { %>
+            <div class="alert alert-success"><%= message %></div>
+        <% } %>
+        <% if (error) { %>
+            <div class="alert alert-error"><%= error %></div>
+        <% } %>
 
         <% if (events && events.length > 0) { %>
             <div class="booking-row header">
                 <span>Event</span>
                 <span>Date</span>
                 <span>Price</span>
+                <span>Available</span>
+                <span>Tickets</span>
                 <span></span>
             </div>
 
@@ -25,10 +34,26 @@
                     <div class="event-info">
                         <h2><%= event.title %></h2>
                         <p><%= event.description %></p>
+                        <small>Category: <%= event.category %></small>
+                        <small>Location: <%= event.location %></small>
                     </div>
                     <span><%= new Date(event.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) %></span>
                     <span>R<%= (event.ticketPrice || 0).toFixed(2) %></span>
-                    <button type="button" class="book-button">Book ticket</button>
+                    <span><%= event.availableSeats %> / <%= event.totalCapacity %></span>
+                    
+                    <form action="/bookings/book/create/<%= event._id %>" method="POST" class="booking-form">
+                        <input type="number" 
+                               name="ticketsBooked" 
+                               min="1" 
+                               max="<%= event.availableSeats %>" 
+                               value="1" 
+                               required 
+                               class="ticket-input"
+                               <%= event.isSoldOut ? 'disabled' : '' %>>
+                        <button type="submit" class="book-button" <%= event.isSoldOut ? 'disabled' : '' %>>
+                            <%= event.isSoldOut ? 'Sold Out' : 'Book ticket' %>
+                        </button>
+                    </form>
                 </div>
             <% }) %>
         <% } else { %>
