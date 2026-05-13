@@ -12,7 +12,7 @@ const registerUser = async (req, res) => {
     const newUser = new User({ name, email, password, phone });
     await newUser.save();
 
-    res.status(201).send("Registration successful! You can now log in.");
+    res.redirect('/auth/login');
   } catch (error) {
     console.error("Error during registration: ", error);
     res.status(500).send("Internal Server Error");
