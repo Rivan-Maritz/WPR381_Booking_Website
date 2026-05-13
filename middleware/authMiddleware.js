@@ -1,9 +1,7 @@
 const isAuthenticated = (req, res, next) => {
   console.log('isAuthenticated - Session user:', req.session.user);
   
-  // Check if user exists in session
   if (req.session && req.session.user) {
-    // Attach user to req object for controllers
     req.user = req.session.user;
     console.log('User authenticated, ID:', req.user.id);
     return next();

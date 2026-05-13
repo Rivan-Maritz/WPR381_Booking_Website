@@ -1,12 +1,12 @@
-// Analytics Dashboard JavaScript
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize charts
+
     let bookingsChart, categoryChart, statusChart;
     
-    // Load initial data
+
     loadChartData('30days');
     
-    // Period selector change handler
+
     const periodSelect = document.getElementById('periodSelect');
     if (periodSelect) {
         periodSelect.addEventListener('change', function(e) {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Function to load chart data via AJAX
+
     async function loadChartData(period) {
         try {
             const response = await fetch(`/analytics/api/stats?period=${period}`);
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Update bookings chart
+
     function updateBookingsChart(data) {
         const labels = data.map(item => item._id);
         const bookingCounts = data.map(item => item.count);
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Create bookings chart
+
     function createBookingsChart(labels, bookingCounts, revenues) {
         const ctx = document.getElementById('bookingsChart')?.getContext('2d');
         if (!ctx) return;
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Create category chart (donut)
+
     const categoryCtx = document.getElementById('categoryChart')?.getContext('2d');
     if (categoryCtx && typeof eventsByCategory !== 'undefined') {
         const categoryLabels = eventsByCategory.map(cat => cat._id);
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Create status chart
+
     const statusCtx = document.getElementById('statusChart')?.getContext('2d');
     if (statusCtx && typeof metrics !== 'undefined') {
         statusChart = new Chart(statusCtx, {
@@ -221,14 +221,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Auto-refresh data every 5 minutes
+
     setInterval(() => {
         if (periodSelect) {
             loadChartData(periodSelect.value);
         }
-    }, 300000); // 5 minutes
+    }, 300000);
     
-    // Add loading animation for charts
+
     function showLoading(container) {
         container.classList.add('loading');
     }
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
         container.classList.remove('loading');
     }
     
-    // Format numbers with K/M/B suffixes
+
     function formatNumber(num) {
         if (num >= 1000000000) {
             return (num / 1000000000).toFixed(1) + 'B';
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return num.toString();
     }
     
-    // Export data functionality (optional)
+
     window.exportDashboardData = function() {
         const data = {
             metrics: window.metrics,

@@ -35,7 +35,6 @@ const loginUser = async (req, res) => {
       role: user.role
     }
 
-    //res.status(200).send(`Login successful! Welcome back, ${user.name}.`);
     res.redirect("/events/home");
   } catch (error) {
     console.error("Error during login: ", error);

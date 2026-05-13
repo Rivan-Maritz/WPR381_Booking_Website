@@ -3,7 +3,6 @@ const router = express.Router();
 const bookController = require('../controllers/bookController');
 const {isAuthenticated, isAdmin} = require('../middleware/authMiddleware');
 
-// Debug route - check if session is working
 router.get('/check-session', (req, res) => {
     res.json({
         sessionUser: req.session.user,
@@ -17,7 +16,6 @@ router.post('/book/create/:eventId', (req, res, next) => {
     next();
 }, isAuthenticated, bookController.createBooking);
 
-//add code for active booking
 router.get('/activeBook', isAuthenticated, bookController.getActiveBookings);
 
 module.exports = router;
