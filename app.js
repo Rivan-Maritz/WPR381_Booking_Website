@@ -50,6 +50,9 @@ app.use("/events", eventRoutes );
 const bookRoutes = require("./routes/bookingRoutes");
 app.use("/bookings", bookRoutes);
 
+const dashRoutes = require('./routes/dashRoutes');
+app.use("/analytics", dashRoutes);
+
 // Base route - temporarily pointing to the login page for testing
 app.get("/", (req, res) => {
   if (req.session.user) {

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | EventHub Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/dash.css">
+    <!-- Chart.js CDN for beautiful charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    
+    <main class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Analytics Dashboard</h1>
+            <p>Real-time insights and performance metrics</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <h3>Total Users</h3>
+                    <p class="stat-number"><%= metrics.totalUsers.toLocaleString() %></p>
+                    <span class="stat-trend positive">+12% vs last month</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🎉</div>
+                <div class="stat-info">
+                    <h3>Total Events</h3>
+                    <p class="stat-number"><%= metrics.totalEvents.toLocaleString() %></p>
+                    <div class="stat-breakdown">
+                        <span>Active: <%= metrics.activeEvents %></span>
+                        <span>Past: <%= metrics.pastEvents %></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🎟️</div>
+                <div class="stat-info">
+                    <h3>Total Bookings</h3>
+                    <p class="stat-number"><%= metrics.totalBookings.toLocaleString() %></p>
+                    <div class="stat-breakdown">
+                        <span>Confirmed: <%= metrics.confirmedBookings %></span>
+                        <span>Pending: <%= metrics.pendingBookings %></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <h3>Total Revenue</h3>
+                    <p class="stat-number">$<%= metrics.totalRevenue.toLocaleString() %></p>
+                    <span class="stat-trend positive">+23% vs last month</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <h3>Conversion Rate</h3>
+                    <p class="stat-number"><%= metrics.conversionRate %>%</p>
+                    <span>Users who booked</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-info">
+                    <h3>Avg Tickets/Booking</h3>
+                    <p class="stat-number"><%= metrics.avgTicketsPerBooking %></p>
+                    <span>Per transaction</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Booking Trends</h3>
+                    <select id="periodSelect" class="period-select">
+                        <option value="7days">Last 7 Days</option>
+                        <option value="30days" selected>Last 30 Days</option>
+                        <option value="90days">Last 90 Days</option>
+                        <option value="year">Last Year</option>
+                    </select>
+                </div>
+                <canvas id="bookingsChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Events by Category</h3>
+                </div>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <div class="chart-card full-width">
+                <div class="chart-header">
+                    <h3>Popular Events</h3>
+                </div>
+                <div class="popular-events-list">
+                    <% if (popularEvents.length > 0) { %>
+                        <% popularEvents.forEach(event => { %>
+                            <div class="event-row">
+                                <div class="event-name"><%= event.title %></div>
+                                <div class="event-stats">
+                                    <span>🎟️ <%= event.totalTicketsBooked || 0 %> tickets</span>
+                                    <span>📅 <%= event.bookingCount || 0 %> bookings</span>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No events data available</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Booking Status</h3>
+                </div>
+                <canvas id="statusChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Recent Users</h3>
+                </div>
+                <div class="recent-list">
+                    <% if (recentUsers.length > 0) { %>
+                        <% recentUsers.forEach(user => { %>
+                            <div class="list-item">
+                                <div>
+                                    <strong><%= user.name %></strong>
+                                    <small><%= user.email %></small>
+                                </div>
+                                <span class="badge <%= user.role %>"><%= user.role %></span>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No users data available</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Recent Bookings</h3>
+                </div>
+                <div class="recent-list">
+                    <% if (recentBookings.length > 0) { %>
+                        <% recentBookings.forEach(booking => { %>
+                            <div class="list-item">
+                                <div>
+                                    <strong><%= booking.user?.name || 'Unknown' %></strong>
+                                    <small><%= booking.event?.title || 'Unknown Event' %></small>
+                                </div>
+                                <span class="booking-status <%= booking.status %>"><%= booking.status %></span>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No bookings data available</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/js/dash.js"></script>
+    <%- include('../partials/footer') %>
+</body>
+</html>
